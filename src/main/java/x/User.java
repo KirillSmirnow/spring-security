@@ -1,12 +1,10 @@
 package x;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +19,16 @@ public class User {
 
     private String name;
 
-    public User(String name) {
+    @ElementCollection
+    private Set<Role> roles;
+
+    public User(String name, Set<Role> roles) {
         this.name = name;
+        this.roles = roles;
+    }
+
+    public enum Role {
+        ZINA,
+        GALYA,
     }
 }

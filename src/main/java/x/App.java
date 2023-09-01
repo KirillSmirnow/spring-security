@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
+import java.util.Set;
+
 @SpringBootApplication
 @RequiredArgsConstructor
 public class App {
@@ -19,7 +21,7 @@ public class App {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        var николя = userRepository.save(new User("Николя"));
+        var николя = userRepository.save(new User("Николя", Set.of(User.Role.GALYA)));
         sessionRepository.save(new Session(николя, "123"));
     }
 }

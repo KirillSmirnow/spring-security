@@ -34,4 +34,16 @@ public class MyController {
     public String requiredNicola() {
         return "Hi!";
     }
+
+    @GetMapping("/galya")
+    @IsGalya
+    public String requiresGalyaRole() {
+        return "You're Galya!";
+    }
+
+    @GetMapping("/zina")
+    @PreAuthorize("hasRole('ZINA')")
+    public String requiresZinaRole() {
+        return "You're Zina!";
+    }
 }

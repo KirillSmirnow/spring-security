@@ -7,8 +7,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
 
 @Component
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserAuthenticationManager implements AuthenticationManager {
 
@@ -23,6 +27,6 @@ public class UserAuthenticationManager implements AuthenticationManager {
         var user = sessionRepository.findByToken(token)
                 .map(Session::getUser)
                 .orElseThrow(() -> new InvalidBearerTokenException("No session"));
-        return new UserAuthentication(user.getId());
+        return new UserAuthentication(user.getId(), new HashSet<>(user.getRoles()));
     }
 }
